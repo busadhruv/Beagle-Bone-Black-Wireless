@@ -1,5 +1,5 @@
 ## Hardware Requirement
-Beagle Bone Black Wireless Board\n
+Beagle Bone Black Wireless Board <br>
 Micro SD-card and Card readen
 Power supply 5-V DC\n
 USB to TTL converter\n
