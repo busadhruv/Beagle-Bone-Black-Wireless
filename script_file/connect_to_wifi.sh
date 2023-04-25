@@ -62,6 +62,7 @@ if [ $? -eq 0 ]; then
     
     # Turn on user LEDs for 5 seconds
     echo heartbeat | sudo tee /sys/class/leds/beaglebone:green:usr3/trigger >/dev/null
+    sleep 20
     
 else
     echo "Failed to connect to Wi-Fi!"
