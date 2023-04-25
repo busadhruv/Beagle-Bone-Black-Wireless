@@ -1,11 +1,28 @@
 #!/bin/bash
-echo "Connecting to Wi-Fi...."
-echo "Wait for 30-60 second."
 
 if [ $# -ne 2 ]; then
     echo "Usage: $0 <SSID> <password>"
     exit 1
 fi
+echo "Connecting to Wi-Fi...."
+echo "Wait for 30-60 second."
+ # Turn on user LEDs for 5 seconds
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr0/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr1/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr2/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr3/brightness >/dev/null
+    
+    echo 1 | sudo tee /sys/class/leds/beaglebone:green:usr0/brightness >/dev/null
+    echo 1 | sudo tee /sys/class/leds/beaglebone:green:usr1/brightness >/dev/null
+    echo 1 | sudo tee /sys/class/leds/beaglebone:green:usr2/brightness >/dev/null
+    echo 1 | sudo tee /sys/class/leds/beaglebone:green:usr3/brightness >/dev/null
+    sleep 5
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr0/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr1/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr2/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr3/brightness >/dev/null
+    
+
 
 # Below command is used when any error occur for restarting the service
 # Connect to Wi-Fi
@@ -41,6 +58,17 @@ sudo systemctl restart networking.service
 iwconfig wlan0 | grep "ESSID:\"$SSID\"" > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     echo "Wi-Fi connection successful!"
+    echo "TO see result on board USERLED3 in heartbeat form"
+    
+    # Turn on user LEDs for 5 seconds
+    echo heartbeat | sudo tee /sys/class/leds/beaglebone:green:usr3/trigger >/dev/null
+    
 else
     echo "Failed to connect to Wi-Fi!"
-fi
+    echo "TO see result on board USERLED0 and USERLED3 is on"
+    echo 1 | sudo tee /sys/class/leds/beaglebone:green:usr0/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr1/brightness >/dev/null
+    echo 0 | sudo tee /sys/class/leds/beaglebone:green:usr2/brightness >/dev/null
+    echo 1 | sudo tee /sys/class/leds/beaglebone:green:usr3/brightness >/dev/null
+    
+fi 
