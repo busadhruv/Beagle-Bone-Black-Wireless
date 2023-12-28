@@ -6,6 +6,7 @@
 read -p "Enter the path to the U-Boot source directory: " uboot_path
 
 # Check if the entered path exists
+cd ~
 if [ -d "$uboot_path" ]; then
   # Change to the U-Boot directory
   cd "$uboot_path" || exit 1
