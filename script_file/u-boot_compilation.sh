@@ -2,6 +2,18 @@
 
 # U-boot Compilation Script
 
+# STEP 0: Take user input for U-Boot directory path
+read -p "Enter the path to the U-Boot source directory: " uboot_path
+
+# Check if the entered path exists
+if [ -d "$uboot_path" ]; then
+  # Change to the U-Boot directory
+  cd "$uboot_path" || exit 1
+else
+  echo "Invalid directory path. Exiting."
+  exit 1
+fi
+
 # STEP 1: Remove all previously compiled object files
 read -p " Remove all previously compiled object files? (y/n)" choice
 if [ $choice == "y" ]
