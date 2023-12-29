@@ -42,6 +42,10 @@ fi
 read -p "Do you want to compile U-Boot? (y/n)" choice
 if [ $choice == "y" ]
 then
+  echo "Choose number of process to be run during the compilation"
+  echo "Choose the value as twice that of your cpu core"
+  
+  echo "run this command for cpu detail  $ cat /proc/cpuinfo"
   echo "Enter 4 or 8"
   read CORES
   make CROSS_COMPILE=arm-linux-gnueabihf- -j${CORES}
@@ -53,4 +57,3 @@ then
   cd -
   sudo cp -a u-boot.img MLO ~/U-BOOT_FILES
 fi
-

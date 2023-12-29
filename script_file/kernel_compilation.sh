@@ -1,8 +1,22 @@
 #!/bin/bash
 
+#Take user input for U-Boot directory path
+read -p "Enter the path to the kernel source directory: " kernel_path
+
+# Check if the entered path exists
+cd ~
+if [ -d "$kernel_path" ]; then
+  # Change to the U-Boot directory
+  cd "$kernel_path" || exit 1
+else
+  echo "Invalid directory path. Exiting."
+  exit 1
+fi
+
+
 # Remove all the temporary files, object files, images generated during the previous build,
 # including the .config file if created previously
-echo "Remove all the temporary files, object files, images generated during the previous build"
+echo "Removing all the temporary files, object files, images generated during the previous build"......
 make ARCH=arm distclean
 
 # Check if the default configuration file exists
@@ -26,11 +40,10 @@ then
 fi
 
 # Kernel source code compilation. This stage creates a kernel image "uImage" also all the device tree source files will be compiled, and dtbs will be generated
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- uImage dtbs LOADADDR=0x80008000 -j4
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- uImage dtbs LOADADDR=0x80008000 -j8
 
 # Build and generate in-tree loadable(M) kernel modules(.ko)
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules -j4
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules -j8
 
 # Install all the generated .ko files in the default path of the computer (/lib/modules/<kernel_ver>)
 sudo make ARCH=arm modules_install
-
