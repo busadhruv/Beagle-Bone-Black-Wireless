@@ -2,18 +2,7 @@
 
 # U-boot Compilation Script
 
-# STEP 0: Take user input for U-Boot directory path
-read -p "Enter the path to the U-Boot source directory: " uboot_path
-
-# Check if the entered path exists
-cd ~
-if [ -d "$uboot_path" ]; then
-  # Change to the U-Boot directory
-  cd "$uboot_path" || exit 1
-else
-  echo "Invalid directory path. Exiting."
-  exit 1
-fi
+cd downloads/U_BOOT/ || exit 1
 
 # STEP 1: Remove all previously compiled object files
 read -p " Remove all previously compiled object files? (y/n)" choice
@@ -49,11 +38,6 @@ then
   echo "Enter 4 or 8"
   read CORES
   make CROSS_COMPILE=arm-linux-gnueabihf- -j${CORES}
-  
-  cd ~
-  if [ ! -d "$HOME/U-BOOT_FILES" ]; then
-    mkdir "$HOME/U-BOOT_FILES"
-  fi
-  cd -
-  sudo cp -a u-boot.img MLO ~/U-BOOT_FILES
 fi
+
+cd ../../

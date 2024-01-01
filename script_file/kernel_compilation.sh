@@ -1,18 +1,6 @@
 #!/bin/bash
 
-#Take user input for U-Boot directory path
-read -p "Enter the path to the kernel source directory: " kernel_path
-
-# Check if the entered path exists
-cd ~
-if [ -d "$kernel_path" ]; then
-  # Change to the U-Boot directory
-  cd "$kernel_path" || exit 1
-else
-  echo "Invalid directory path. Exiting."
-  exit 1
-fi
-
+cd LINUX_SOURCE_CODE/ || exit 1
 
 # Remove all the temporary files, object files, images generated during the previous build,
 # including the .config file if created previously
@@ -47,3 +35,5 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules -j8
 
 # Install all the generated .ko files in the default path of the computer (/lib/modules/<kernel_ver>)
 sudo make ARCH=arm modules_install
+
+cd ../

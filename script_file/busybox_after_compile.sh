@@ -1,10 +1,11 @@
 #!/bin/bash
 
+cd ROOTFS/
 # Create /dev and some special files under this directory.
 mkdir dev
-mknod dev/console c 5 1
-mknod dev/null c 1 3
-mknod dev/zero c 1 5
+sudo mknod dev/console c 5 1
+sudo mknod dev/null c 1 3
+sudo mknod dev/zero c 1 5
 
 # Create /lib and /usr/lib, and copy static libraries from the ARM cross compiler toolchain path.
 mkdir lib usr/lib
@@ -31,11 +32,12 @@ sysfs /sys  sysfs defaults  0 0
 EOL
 
 cat >> etc/hostname <<EOL
-embedjournal
+DhruvBusa
 EOL
 
 cat >> etc/passwd <<EOL
 root::0:0:root:/root:/bin/sh
 EOL
+cd ..
 
 
